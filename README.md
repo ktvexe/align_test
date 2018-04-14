@@ -8,6 +8,29 @@
 # Build
 * `$ make`
 
+## Structure format
+```
+struct align_struct{
+    char a;
+    int b;
+    short c;
+};
+
+struct small_align_struct{
+    int b;
+    char a;
+    short c;
+};
+
+struct non_align_struct{
+    char a;
+    short c;
+    int b;
+
+}__attribute__((packed, aligned(1)));
+
+```
+
 ## Result of execution
 ```
 size of align : 12
