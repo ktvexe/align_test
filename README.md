@@ -10,7 +10,7 @@
 
 ## Target
 Intel(R) Core(TM) i5-3210M CPU @ 2.50GHz
-
+Raspberry pi Cortex-A53
 
 ## Structure format
 ```
@@ -36,12 +36,22 @@ struct non_align_struct{
 
 ## Result of execution
 ```
+/*i5-3210M*/
 size of align : 12
 size of small : 8
 size of non : 7
 align:       18384 us
 small:       11939 us
 non:         11628 us
+
+/*raspberry pi cortex-a53*/
+size of align : 12
+size of small : 8
+size of non : 7
+align:       83704 us
+small:       54211 us
+non:         120929 us
+
 ```
 
 # License
