@@ -10,7 +10,8 @@
 
 ## Target
 Intel(R) Core(TM) i5-3210M CPU @ 2.50GHz
-Raspberry pi Cortex-A53
+Raspberry pi (Cortex-A53)
+Nvidia Jetson TX2 (Nvidia Denver+ Cortex-A57)
 
 ## Structure format
 ```
@@ -51,6 +52,14 @@ size of non : 7
 align:       83704 us
 small:       54211 us
 non:         120929 us
+
+/*Nvidia Jetson TX2*/
+size of align : 12
+size of small : 8
+size of non : 7
+align:       53594 us
+small:       22162 us
+non:         22216 us
 
 ```
 
