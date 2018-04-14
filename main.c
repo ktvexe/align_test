@@ -4,11 +4,14 @@
 #include <stdint.h>
 
 #define NUM 5000000
+/*4M page*/
+#define page 4*1024*1024
+
 #define measure(type,struct_ptr,name,verbose) \
     for(int loop = 0;loop<100;loop++){ \
         clock_gettime(CLOCK_REALTIME, &start); \
         for (int i = 0; i < NUM; i++) { \
-            ptr = (((char *)struct_ptr)+(64* (i%64))); \
+            ptr = (((char *)struct_ptr)+(64* (i%(page/64)))); \
             if(verbose) printf("%s:  %p\n",name,ptr); \
             ((type *)ptr) -> b =1; \
             ((type *)ptr) -> b +=1; \
@@ -59,10 +62,10 @@ int main(){
     void *ptr;
     unsigned long count = 0;
 
-    //alloc 4K size for each struct
-    align = malloc(4096);
-    small = malloc(4096);
-    non = malloc(4096);
+    //alloc page size for each struct
+    align = malloc(page);
+    small = malloc(page);
+    non = malloc(page);
     
     printf("size of align : %ld\n",sizeof(*align));
     printf("size of small : %ld\n",sizeof(*small));
