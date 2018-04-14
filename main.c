@@ -30,7 +30,6 @@ struct non_align_struct{
     char a;
     short c;
     int b;
-
 }__attribute__((packed, aligned(1)));
 
 static long diff_in_us(struct timespec t1, struct timespec t2)

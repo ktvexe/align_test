@@ -26,7 +26,6 @@ struct non_align_struct{
     char a;
     short c;
     int b;
-
 }__attribute__((packed, aligned(1)));
 
 ```
