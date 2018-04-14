@@ -8,6 +8,10 @@
 # Build
 * `$ make`
 
+## Target
+Intel(R) Core(TM) i5-3210M CPU @ 2.50GHz
+
+
 ## Structure format
 ```
 struct align_struct{
