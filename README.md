@@ -9,9 +9,9 @@
 * `$ make`
 
 ## Target
-Intel(R) Core(TM) i5-3210M CPU @ 2.50GHz
-Raspberry pi (Cortex-A53)
-Nvidia Jetson TX2 (Nvidia Denver+ Cortex-A57)
+* Intel(R) Core(TM) i5-3210M CPU @ 2.50GHz
+* Raspberry pi (Cortex-A53)
+* Nvidia Jetson TX2 (Nvidia Denver+ Cortex-A57)
 
 ## Structure format
 ```
