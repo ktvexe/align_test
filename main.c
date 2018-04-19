@@ -3,23 +3,28 @@
 #include <time.h>
 #include <stdint.h>
 
-#define NUM 5000000
+#define TEST_NUM 4*1024*1024
+//#define TEST_NUM 5000000
 /*4M page*/
-#define page 4*1024*1024
+#define PAGE 4*1024*1024
+/*Run 100 times for average*/
+#define AVGTIMES 100
+/*Shift to avoid cache line prefetching*/
+#define OFFSET 64
 
-#define measure(type,struct_ptr,name,verbose) \
-    for(int loop = 0;loop<100;loop++){ \
-        clock_gettime(CLOCK_REALTIME, &start); \
-        for (int i = 0; i < NUM; i++) { \
-            ptr = (((char *)struct_ptr)+(64* (i%(page/64)))); \
-            if(verbose) printf("%s:  %p\n",name,ptr); \
-            ((type *)ptr) -> b =1; \
-            ((type *)ptr) -> b +=1; \
-        }   \
-        clock_gettime(CLOCK_REALTIME, &end);    \
-        count += diff_in_us(start, end);    \
-    }   \
-    printf("%s: \t\t %lf us\n",name, count /100.0); \
+#define measure(type,struct_ptr,verbose)                            \
+    for(int loop = 0;loop<AVGTIMES;loop++){                         \
+        clock_gettime(CLOCK_REALTIME, &start);                      \
+        for (int i = 0; i < TEST_NUM; i++) {                        \
+            ptr = (((char *)struct_ptr)+(64* (i%(PAGE/OFFSET))));   \
+            if(verbose) printf(""#struct_ptr":  %p\n",ptr);         \
+            ((type *)ptr) -> b =1;                                  \
+            ((type *)ptr) -> b +=1;                                 \
+        }                                                           \
+        clock_gettime(CLOCK_REALTIME, &end);                        \
+        count += diff_in_us(start, end);                            \
+    }                                                               \
+    printf(""#struct_ptr": \t\t %lu us\n", count / AVGTIMES);       \
     count = 0;
 
 struct align_struct{
@@ -62,17 +67,17 @@ int main(){
     void *ptr;
     unsigned long count = 0;
 
-    //alloc page size for each struct
-    align = malloc(page);
-    small = malloc(page);
-    non = malloc(page);
+    /*alloc page size for each struct*/
+    align = malloc(PAGE);
+    small = malloc(PAGE);
+    non = malloc(PAGE);
     
     printf("size of align : %ld\n",sizeof(*align));
     printf("size of small : %ld\n",sizeof(*small));
     printf("size of non : %ld\n",sizeof(*non));
 
-    measure(struct align_struct,align,"align",0);
-    measure(struct small_align_struct,small,"small",0);
-    measure(struct non_align_struct,non,"non",0);
+    measure(struct align_struct,align,0);
+    measure(struct small_align_struct,small,0);
+    measure(struct non_align_struct,non,0);
 
 }
